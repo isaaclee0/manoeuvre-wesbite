@@ -7,11 +7,13 @@ interface Props {
 	title: string;
 	description: string;
 	image?: string;
+	imageWidth?: string;
+	imageHeight?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
+const { title, description, image = '/blog-placeholder-1.jpg', imageWidth, imageHeight } = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -41,6 +43,9 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
+{imageWidth && <meta property="og:image:width" content={imageWidth} />}
+{imageHeight && <meta property="og:image:height" content={imageHeight} />}
+<meta property="og:image:type" content="image/png" />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
