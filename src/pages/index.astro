@@ -26,6 +26,14 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				transform: translate(-50%, -50%);
 				z-index: -1;
 			}
+			/* Hide default play button on iOS/Safari when autoplay is disabled */
+			#bg-video::-webkit-media-controls {
+				display: none !important;
+			}
+			#bg-video::-webkit-media-controls-start-playback-button {
+				display: none !important;
+				-webkit-appearance: none;
+			}
 			.content {
 				position: absolute;
 				top: 0;
@@ -42,12 +50,14 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				padding: 1rem;
 				box-sizing: border-box;
 				overflow-y: auto; /* Allow scrolling if content overflows vertically */
+				pointer-events: none; /* Allow clicks to pass through to video if needed */
 			}
 			
 			.header-container {
 				width: 100%;
 				max-width: 1200px;
 				margin-bottom: 2rem;
+				pointer-events: auto; /* Re-enable pointer events for content */
 			}
 
 			h1 {
@@ -67,6 +77,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				width: 100%;
 				max-width: 1200px;
 				gap: 2rem;
+				pointer-events: auto; /* Re-enable pointer events for content */
 			}
 
 			.text-column {
@@ -84,6 +95,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				color: #e0e0e0;
 				font-family: 'Source Serif 4', serif;
 				line-height: 1.0; /* Adjusted line height */
+				font-style: italic;
 			}
 			.about {
 				margin-bottom: 2rem;
@@ -194,11 +206,21 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 			/* Mobile Responsive adjustments */
 			@media (max-width: 600px) {
+				.content {
+					justify-content: flex-start;
+					padding-top: 15vh; /* More space at top */
+				}
 				h1 {
 					font-size: 2.5rem;
 				}
 				.tagline {
 					font-size: 1.1rem;
+				}
+				.about {
+					margin-bottom: 0.5rem; /* Reduced space */
+				}
+				.main-grid {
+					gap: 1.5rem; /* Reduced space */
 				}
 				form {
 					padding: 1.5rem;
@@ -207,9 +229,9 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		</style>
 	</head>
 	<body>
-		<video autoplay muted loop playsinline id="bg-video">
-			<source src="/dam.webm" type="video/webm">
+		<video autoplay muted loop playsinline webkit-playsinline id="bg-video" poster="/dam.svg">
 			<source src="/dam_optimized.mp4" type="video/mp4">
+			<source src="/dam.webm" type="video/webm">
 			Your browser does not support the video tag.
 		</video>
 		
