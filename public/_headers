@@ -1,0 +1,17 @@
+# Cache static assets (videos, fonts, images) for 1 year
+/dam.webm
+  Cache-Control: public, max-age=31536000, immutable
+/dam_optimized.mp4
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache CSS and JS (hashed by Astro) for 1 year
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache HTML for 1 hour (or shorter/longer depending on update frequency preference)
+# but require revalidation if we want instant updates.
+# For a landing page, 1 hour or even 1 day is often fine.
+/*
+  Cache-Control: public, max-age=3600
