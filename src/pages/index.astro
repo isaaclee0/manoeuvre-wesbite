@@ -230,9 +230,9 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		</style>
 	</head>
 	<body>
-		<video autoplay muted loop playsinline webkit-playsinline id="bg-video" poster="/dam.svg">
-			<source src="/dam_optimized.mp4" type="video/mp4">
+		<video autoplay muted loop playsinline id="bg-video" poster="/dam.svg" {...{'fetchpriority': 'high'}}>
 			<source src="/dam.webm" type="video/webm">
+			<source src="/dam_optimized.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
 		
