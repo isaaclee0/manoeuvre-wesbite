@@ -1,50 +1,242 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title="Manoeuvre" description="Manoeuvre Engineering" />
+		<style>
+			body, html {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+				width: 100%;
+				overflow: hidden;
+				font-family: 'Source Serif 4', serif;
+			}
+			#bg-video {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 100vw;
+				height: 100vh;
+				object-fit: cover;
+				transform: translate(-50%, -50%);
+				z-index: -1;
+			}
+			.content {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				background: rgba(0, 0, 0, 0.6); /* Darker overlay for better contrast */
+				color: white;
+				text-align: center;
+				padding: 1rem;
+				box-sizing: border-box;
+				overflow-y: auto; /* Allow scrolling if content overflows vertically */
+			}
+			
+			.header-container {
+				width: 100%;
+				max-width: 1200px;
+				margin-bottom: 2rem;
+			}
+
+			h1 {
+				font-size: 4rem;
+				margin: 0;
+				text-transform: lowercase;
+				letter-spacing: normal;
+				color: white;
+				font-weight: 700;
+				font-family: 'Parkinsans', sans-serif;
+			}
+			
+			.main-grid {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width: 100%;
+				max-width: 1200px;
+				gap: 2rem;
+			}
+
+			.text-column {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				max-width: 600px;
+			}
+
+			.tagline {
+				font-size: 2.5rem; /* Increased mobile base size */
+				font-weight: 300;
+				margin-bottom: 2rem;
+				margin-top: 0;
+				color: #e0e0e0;
+				font-family: 'Source Serif 4', serif;
+				line-height: 1.0; /* Adjusted line height */
+			}
+			.about {
+				margin-bottom: 2rem;
+				color: #f0f0f0;
+				font-size: 1.1rem;
+				line-height: 1.6;
+			}
+			.about p {
+				margin: 0.5rem 0;
+			}
+			
+			.form-column {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+			}
+
+			form {
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+				width: 100%;
+				max-width: 400px;
+				background: rgba(255, 255, 255, 0.1);
+				padding: 2rem;
+				border-radius: 8px;
+				backdrop-filter: blur(5px);
+			}
+			input, textarea {
+				width: 100%;
+				box-sizing: border-box;
+				padding: 0.8rem;
+				border-radius: 4px;
+				border: 1px solid rgba(255, 255, 255, 0.3);
+				background: rgba(255, 255, 255, 0.9);
+				font-size: 1rem;
+				font-family: inherit;
+				resize: vertical; /* Allow vertical resizing only for textarea */
+			}
+			button {
+				padding: 1rem;
+				border-radius: 4px;
+				border: none;
+				background-color: white;
+				color: black;
+				cursor: pointer;
+				font-weight: bold;
+				font-size: 1rem;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				transition: all 0.2s;
+			}
+			button:hover {
+				background-color: #ddd;
+				transform: translateY(-1px);
+			}
+			
+			/* Desktop Layout */
+			@media (min-width: 768px) {
+				.content {
+					justify-content: flex-start; /* Align to top */
+					padding-top: 10vh; /* Give some top spacing */
+				}
+				
+				.header-container {
+					text-align: center;
+					margin-bottom: 4rem;
+				}
+
+				h1 {
+					font-size: 4.8rem; /* 20% larger than 4rem */
+				}
+
+				.main-grid {
+					display: grid;
+					grid-template-columns: 1fr 1fr;
+					gap: 4rem;
+					align-items: start;
+				}
+
+				.text-column {
+					align-items: flex-start;
+					text-align: left;
+					max-width: none;
+					padding-right: 2rem;
+				}
+
+				.tagline {
+					max-width: 100%;
+					font-size: 60px; /* As requested */
+					margin-top: -10px; /* Slight negative margin to visually align cap height with form */
+				}
+				
+				.about {
+					text-align: left;
+					font-size: 1.25rem;
+				}
+
+				.form-column {
+					justify-content: flex-start; /* Or center depending on preference, usually form right aligned or left aligned in its column */
+				}
+				
+				form {
+					margin-left: auto; /* Push form to the right edge of its column if we want centering relative to grid, or keep as is */
+					margin-right: auto;
+				}
+			}
+
+			/* Mobile Responsive adjustments */
+			@media (max-width: 600px) {
+				h1 {
+					font-size: 2.5rem;
+				}
+				.tagline {
+					font-size: 1.1rem;
+				}
+				form {
+					padding: 1.5rem;
+				}
+			}
+		</style>
 	</head>
 	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
+		<video autoplay muted loop playsinline id="bg-video">
+			<source src="/dam.webm" type="video/webm">
+			<source src="/dam_optimized.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+		
+		<div class="content">
+			<div class="header-container">
+				<h1>Manoeuvre</h1>
+			</div>
+			
+			<div class="main-grid">
+				<div class="text-column">
+					<p class="tagline">n. a deliberate coordinated movement requiring dexterity and skill</p>
+					
+					<div class="about">
+						<p>We are an engineering company based in Southern Tasmania.</p>
+						<p>Please use the contact form below to get in touch.</p>
+					</div>
+				</div>
+
+				<div class="form-column">
+					<form action="https://usebasin.com/f/571c2c169233" method="POST">
+						<input type="text" name="name" placeholder="Name" required />
+						<input type="email" name="email" placeholder="Email" required />
+						<textarea name="message" rows="4" placeholder="Message" required></textarea>
+						<button type="submit">Contact Us</button>
+					</form>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
